@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TikTok-Style Video Carousel with Back Link</title>
+  <!-- Include Hind Vadodara font -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara&display=swap" rel="stylesheet">
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f8f8f8;
+      font-family: Arial, sans-serif;
+    }
+    /* "Back" Link Styling */
+    #back-link {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-family: 'Hind Vadodara', sans-serif;
+      font-size: 18px;
+      color: #000;
+      text-decoration: none;
+      z-index: 20;
+    }
+    /* Wrapper for Carousel and Navigation Arrows */
+    .carousel-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    /* Carousel Container (TikTok dimensions) */
+    .carousel-container {
+      width: 360px;    /* Desired width */
+      height: 640px;   /* Desired height (9:16 ratio) */
+      overflow: hidden;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background: #000;
+    }
+    /* Slides Wrapper */
+    .carousel-slides {
+      display: flex;
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+    /* Each Slide – using width: 100% to exactly fill container */
+    .carousel-slide {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+    /* Video Styling */
+    .carousel-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Navigation Buttons – positioned relative to the wrapper */
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;               /* Fixed width to form a circle */
+      height: 40px;              /* Fixed height to form a circle */
+      background: #F8FF6B;       /* Circle color */
+      border: none;
+      color: #460ECD;               /* White arrow color */
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-button:hover {
+      background: #e0e052; /* Optional hover color */
+    }
+    /* Position arrows outside the video container */
+    .prev {
+      left: -50px;  /* Adjust as needed */
+    }
+    .next {
+      right: -50px; /* Adjust as needed */
+    }
+  </style>
+</head>
+<body>
+  <!-- "Back" Link -->
+  <a id="back-link" href="index.html">Back</a>
+
+  <!-- Carousel Wrapper (contains both the video container and the arrows) -->
+  <div class="carousel-wrapper">
+    <!-- Carousel Container -->
+    <div class="carousel-container">
+      <!-- Slides Wrapper -->
+      <div class="carousel-slides">
+        <!-- Slide 1 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/PolSlowmo.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/TopologieGIF.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/TopologieDumpling.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Slide 4 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/CrumplerStopmo.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Slide 5 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/Poses.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Slide 6 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/IZIPIZI-Pway.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Slide 7 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/PolthrowBag.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Slide 8 -->
+        <div class="carousel-slide">
+          <video controls>
+            <source src="/Tiktok-Video-Contents/video/Portfolio ULG Video Contents/TopologieTour.MP4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+    <!-- Navigation Buttons (outside the video container) -->
+    <button class="nav-button prev">&#10094;</button>
+    <button class="nav-button next">&#10095;</button>
+  </div>
+  
+  <script>
+    // JavaScript for Carousel Functionality and Auto-Play Behavior
+    const slidesContainer = document.querySelector('.carousel-slides');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    
+    function updateCarousel() {
+      // Shift the slides container horizontally based on the current index.
+      slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+      updateVideoPlayback();
+    }
+    
+    function updateVideoPlayback() {
+      // Loop through each slide. Play the video in the current slide and pause others.
+      slides.forEach((slide, index) => {
+        const video = slide.querySelector('video');
+        if (index === currentIndex) {
+          // Mute to allow autoplay in most browsers.
+          video.muted = true;
+          video.play().catch(error => {
+            console.log("Video play failed: ", error);
+          });
+        } else {
+          video.pause();
+        }
+      });
+    }
+    
+    prevButton.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    });
+    
+    nextButton.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    });
+    
+    // Optional: Swipe detection for touch devices.
+    let startX = 0;
+    slidesContainer.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+    slidesContainer.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      if (startX - endX > 50) {
+        currentIndex = (currentIndex + 1) % totalSlides;
+      } else if (endX - startX > 50) {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      }
+      updateCarousel();
+    });
+    
+    // Initialize by playing the first video.
+    updateVideoPlayback();
+  </script>
+</body>
+</html>
